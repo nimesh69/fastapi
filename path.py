@@ -67,3 +67,23 @@ async def update_book(updated_book=Body()):
 
 
 
+@app.delete("/books/delete_book/{book_title}")
+async def delete_book(book_title: str):
+    for i in range (len(BOOKS)):
+        if BOOKS[i].get('title').casefold() == book_title.casefold():
+            # BOOKS.pop(i) can be used pop also
+            del BOOKS[i]
+            return {"message": f"Book '{book_title}' deleted successfully"}
+            break
+
+
+@app.get("/books/{author_title}")
+async def get_author_book(author_title: str):
+    books = []
+    for i in range (len(BOOKS)):
+        if BOOKS[i].get('author').casefold() == author_title.casefold():
+            books.append(BOOKS[i].get('category'))
+    # for book in BOOKS:
+    #     if book.get('author').casefold() == author_title.casefold():
+    #         books.append(book.get('category'))
+    return books
